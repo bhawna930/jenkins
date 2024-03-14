@@ -35,13 +35,13 @@ pipeline {
 
         stage("Code Analysis") {
             steps {
-                 echo 'Performing code analysis using SonarQube'
+                 echo 'Performing code analysis'
             }
         }
 
         stage("Security Scan") {
             steps {
-               echo 'Performing security scan using SonarQube'
+               echo 'Performing security scan'
             }
              post{ 
                     success{
@@ -59,7 +59,7 @@ pipeline {
 
         stage("Deploy to Staging") {
             steps {
-                 echo 'Deploy to staging sever AWS EC2 s3://staging-bucket/'
+                 echo 'Deploy to staging sever'
             }
         }
 
@@ -71,7 +71,7 @@ pipeline {
 
         stage("Deploy to Production") {
             steps {
-                echo'Deploy to Production server AWS EC2'
+                echo'Deploy to Production server'
             }
         }
     }
