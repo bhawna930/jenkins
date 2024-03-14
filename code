@@ -6,8 +6,6 @@ pipeline {
             steps {
                 echo  'Building project to compile and package.'
             }
-
-
         }
 
         stage("Unit and Integration Tests") {
