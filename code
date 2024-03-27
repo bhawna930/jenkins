@@ -8,7 +8,6 @@ pipeline {
             }
         }
 
-
         stage("Unit and Integration Tests") {
             steps {
                 echo 'JUnit test for code function.'
