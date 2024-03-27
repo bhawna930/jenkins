@@ -13,18 +13,7 @@ pipeline {
                 echo 'JUnit test for code function.'
                 echo 'Integration Test working together.'
             }
-            post{ 
-                    success{
-                        mail to: "hieunguyen23032001@gmail.com",
-                        subject: "Success: JUnit and Integration test successful.",
-                        body: "Stage is working."
-                    }
-                    failure{
-                        mail to: "hieunguyen23032001@gmail.com",
-                        subject: "Unsuccess: JUnit and Integration test failure.",
-                        body: "Stage is not working. Please try to test again."
-                    }
-                }
+            
         }
 
         stage("Code Analysis") {
@@ -37,18 +26,7 @@ pipeline {
             steps {
                echo 'Performing security scan using SonarQube'
             }
-             post{ 
-                    success{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Success: Security scans successful.",
-                        body: "Scan is secure."
-                    }
-                    failure{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Unsuccess: Security scans failure.",
-                        body: "Scan is not secure. Please try to protect application."
-                    }
-                }
+            
         }
 
         stage("Deploy to Staging") {
