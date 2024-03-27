@@ -12,8 +12,6 @@ pipeline {
             steps {
                 echo 'JUnit test for code function.'
                 echo 'Integration Test working together.'
-
-
             }
             post{ 
 
