@@ -48,13 +48,13 @@ pipeline {
 
    post {
         success {
-            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Successful",
+            emailext subject: " Successful",
                       body: 'The build was successful. Congratulations!',
                       to: 'bhawnasharma5779@gmail.com',
                       attachLog: true
         }
         failure {
-            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
+            emailext subject: " Failed",
                       body: 'The build has failed. Please make the necessary changes and debug ',
                       to: 'bhawnasharma5779@gmail.com',
                       attachLog: true
