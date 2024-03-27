@@ -44,7 +44,7 @@ pipeline {
              post{ 
                     success{
                         mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Success: Security scans successful.",
+                        subject: "Success: Security scans successfully done.",
                         body: "Scan is secure."
                     }
                     failure{
