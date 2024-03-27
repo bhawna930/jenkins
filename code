@@ -15,7 +15,6 @@ pipeline {
             }
             post{ 
 
-
                     success{
                         mail to: "bhawnasharma5779@gmail.com",
                         subject: "Success: JUnit and Integration test successful.",
