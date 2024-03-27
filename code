@@ -1,82 +1,70 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage("Build") {
+        stage('Build') {
             steps {
-                echo  'Building project to compile and package.'
+                echo 'Building the code using Maven to autoamtically build and manage'
             }
         }
-
-        stage("Unit and Integration Tests") {
+        
+        stage('Unit and Integration Tests') {
             steps {
-                echo 'JUnit test for code function.'
-                echo 'Integration Test working together.'
-            }
-            post{ 
-
-                    success{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Success: JUnit and Integration test successful.",
-                        body: "Stage is working."
-                    }
-                    failure{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Unsuccess: JUnit and Integration test failure.",
-                        body: "Stage is not working. Please try to test again."
-                    }
-                }
-        }
-
-        stage("Code Analysis") {
-            steps {
-                 echo 'Performing code analysis'
+                echo 'Running unit tests...'
+                echo 'Running integration tests...'
+                echo 'Junit can be unsed for unit testing and Selenium can be used for integration testing'
             }
         }
-
-        stage("Security Scan") {
+        
+        stage('Code Analysis') {
             steps {
-               echo 'Performing security scan'
-            }
-             post{ 
-                    success{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Success: Security scans successfully done.",
-                        body: "Scan is secure."
-                    }
-                    failure{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Unsuccess: Security scans failure.",
-                        body: "Scan is not secure. Please try to protect application."
-                    }
-                }
-        }
-
-        stage("Deploy to Staging") {
-            steps {
-                 echo 'Deploy to staging sever'
+                echo 'Running code analysis'
+                echo 'sonarQube can be used'
             }
         }
-
-        stage("Integration Tests on Staging") {
+        
+        stage('Security Scan') {
             steps {
-                echo 'Run Integration Tests on Staging environment'
+                echo 'Performing security scan on the code'
+                echo 'Tool recommended: OWASP ZAP'
+
             }
         }
-
-        stage("Deploy to Production") {
+        
+        stage('Deploy to Staging') {
             steps {
-                echo'Deploy to Production server'
+                echo 'Deploying the application to staging server (e.g., AWS EC2 instance)...'
+                echo 'Deployment tool: jenkins server'
+            }
+        }
+        
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging environment...'
+                echo 'tool: Apache JMeter'
+            }
+        }
+        
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying the application to production server (e.g., AWS EC2 instance)...'
+                echo 'tool: Jenkins pipeline with AWS Codedeploy plugin'
+
             }
         }
     }
-
     post {
         success {
-            echo 'Deployment to production successful!'
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Successful",
+                      body: 'The build was successful. Congratulations!',
+                      to: 'bhawnasharma5779@gmail.com',
+                      attachLog: true
         }
         failure {
-            echo 'Deployment failed!'
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
+                      body: 'The build has failed. Please make the necessary changes and debug ',
+                      to: 'bhawnasharma5779@gmail.com',
+                      attachLog: true
         }
     }
 }
