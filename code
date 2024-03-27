@@ -46,18 +46,18 @@ pipeline {
         }
     }
 
-    post {
+   post {
         success {
-            mail to: "bhawnasharma5779@gmail.com",
-                 subject: "Success: JUnit and Integration test successful.",
-                 body: "Stage is working.",
-                 attachLog: true
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Successful",
+                      body: 'The build was successful. Congratulations!',
+                      to: 'bhawnasharma5779@gmail.com',
+                      attachLog: true
         }
         failure {
-            mail to: "bhawnasharma5779@gmail.com",
-                 subject: "Unsuccess: JUnit and Integration test failure.",
-                 body: "Stage is not working. Please try to test again.",
-                 attachLog: true
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
+                      body: 'The build has failed. Please make the necessary changes and debug ',
+                      to: 'bhawnasharma5779@gmail.com',
+                      attachLog: true
         }
     }
 }
