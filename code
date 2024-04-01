@@ -1,82 +1,62 @@
 pipeline {
     agent any
-    
+
     stages {
         stage("Build") {
             steps {
-
-                echo 'Building project to compile and package.'
+                echo 'Building project to compile and package using Maven.'
             }
         }
 
         stage("Unit and Integration Tests") {
             steps {
-                echo 'Running JUnit tests.'
-                echo 'Running Integration Tests.'
-            }
-            post {
-                success {
-                    mail to: "bhawnasharma5779@gmail.com",
-                    subject: "Success: JUnit and Integration test successful.",
-                    body: "Stage is working."
-                }
-                failure {
-                    mail to: "bhawnasharma5779@gmail.com",
-                    subject: "Unsuccessful: JUnit and Integration test failure.",
-                    body: "Stage is not working. Please try again."
-                }
+                echo 'JUnit test for code function.'
+                echo 'Integration Test working together.'
             }
         }
 
         stage("Code Analysis") {
             steps {
-                echo 'Performing code analysis.'
+                echo 'Performing code analysis using SonarQube'
             }
         }
 
         stage("Security Scan") {
             steps {
-                echo 'Performing security scan.'
-            }
-            post {
-                success {
-                    mail to: "bhawnasharma5779@gmail.com",
-                    subject: "Success: Security scans successful.",
-                    body: "Scan is secure."
-                }
-                failure {
-                    mail to: "bhawnasharma5779@gmail.com",
-                    subject: "Unsuccessful: Security scans failure.",
-                    body: "Scan is not secure. Please protect application."
-                }
+                echo 'Performing security scan using SonarQube'
             }
         }
 
         stage("Deploy to Staging") {
             steps {
-                echo 'Deploying to staging server.'
+                echo 'Deploy to staging sever AWS EC2 s3://staging-bucket/'
             }
         }
 
         stage("Integration Tests on Staging") {
             steps {
-                echo 'Running Integration Tests on Staging environment.'
+                echo 'Run Integration Tests on Staging environment'
             }
         }
 
         stage("Deploy to Production") {
             steps {
-                echo 'Deploying to Production server.'
+                echo 'Deploy to Production server AWS EC2'
             }
         }
     }
-    
-    post {
+
+   post {
         success {
-            echo 'Deployment to production successful!'
+            emailext subject: " Successful",
+                      body: 'The build was successful. Congratulations!',
+                      to: 'bhawnasharma5779@gmail.com'
         }
         failure {
-            echo 'Deployment failed!'
+            emailext subject: " Failed",
+                      body: 'The build has failed. Please make the necessary changes and debug ',
+                      to: 'bhawnasharma5779@gmail.com'
+                     
         }
     }
 }
