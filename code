@@ -1,66 +1,65 @@
 pipeline {
     agent any
-
+    
+   
     stages {
-        stage("Build") {
+        stage('Git') {
             steps {
-                echo  'Building project to compile and package using Maven.'
-
+                git branch: 'main', url: 'https://github.com/bhawna930/Blinkname.git'
             }
         }
-
-        stage("Unit and Integration Tests") {
+        
+        stage('Build') {
             steps {
-                echo 'JUnit test for code function.'
-                echo 'Integration Test working together.'
-            }
-            
-        }
-
-        stage("Code Analysis") {
-            steps {
-                 echo 'Performing code analysis using SonarQube'
+                echo 'Dependicies Installed'
+                echo 'USing Build Environments'
             }
         }
-
-        stage("Security Scan") {
+        stage('Unit Tests') {
             steps {
-               echo 'Performing security scan using SonarQube'
-            }
-            
-        }
-
-        stage("Deploy to Staging") {
-            steps {
-                 echo 'Deploy to staging sever AWS EC2 s3://staging-bucket/'
+                echo 'Using JUnit to run test'
+                
             }
         }
-
-        stage("Integration Tests on Staging") {
+        stage('Code Analysis') {
             steps {
-                echo 'Run Integration Tests on Staging environment'
+                echo 'Using SonarQube for code analysis'
+                
             }
         }
-
-        stage("Deploy to Production") {
+        stage('Deploy to Staging') {
             steps {
-                echo'Deploy to Production server AWS EC2'
+                echo 'Deployed to APACHE TOMCAT'
+              
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'top-down integration testing'
+               
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deployed to APACHE TOMCAT'
+                
             }
         }
     }
+    
+    post {
+        success {
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Successful",
+                      body: 'Build Successful. Here is you lofg file',
+                      to: 'bhawnasharma5779@gmail.com',
+                      attachLog: true
+        }
+        failure {
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
+                      body: 'Build Failed.',
+                      to: 'bhawnasharma5779@gmail.com',
+                      attachLog: true
+        }
+    }
 
-   
-
- post{ 
-                    success{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Success: JUnit and Integration test successful.",
-                        body: "Stage is working."
-                    }
-                    failure{
-                        mail to: "bhawnasharma5779@gmail.com",
-                        subject: "Unsuccess: JUnit and Integration test failure.",
-                        body: "Stage is not working. Please try to test again."
-                    }
-                }
 }
